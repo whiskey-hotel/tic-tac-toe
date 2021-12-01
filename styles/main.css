@@ -1,0 +1,57 @@
+#title{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+#gameboard {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	width: 62%;
+	height: 29%;
+}
+
+.boardSelectionLayout {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+    font-size: 2rem;
+}
+
+#one {
+	border-bottom: black solid 5px;
+	border-right: black solid 5px;
+}
+
+#two {
+	border-bottom: black solid 5px;
+	border-right: black solid 5px;
+}
+#three {
+	border-bottom: black solid 5px;
+}
+#four {
+	border-bottom: black solid 5px;
+	border-right: black solid 5px;
+}
+#five {
+	border-bottom: black solid 5px;
+	border-right: black solid 5px;
+}
+#six {
+	border-bottom: black solid 5px;
+}
+#seven {
+	border-right: black solid 5px;
+}
+#eight {
+	border-right: black solid 5px;
+}
