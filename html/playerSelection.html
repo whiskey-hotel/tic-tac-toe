@@ -7,15 +7,47 @@
 		<meta name="description" content="" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../styles/main.css" />
+        <link rel="stylesheet" href="../styles/playerSelection.css" />
 		<script src="../scripts/main.js" defer></script>
 	</head>
 	<body>
 		<header id="title"><h1>Tic-Tac-Toe</h1></header>
 		<main>
-			<div id="container">
-                <button>Single Player Mode</button>
-                <button>Multiplayer Mode</button>
-            </div>
+			<div class="container" id="playerSelectionContainer">
+				<button class="playerMode">Single Player Mode</button>
+				<button class="playerMode">Multiplayer Mode</button>
+			</div>
+            
+            <section id="multi-form-section">
+                <div id="form-container">
+                    <h2 id="form-title">Player Information</h2>
+                    <form id="add-book" onsubmit="return false">
+                        <label for="player1" class="labels">Player 1 Name:</label>
+                        <input type="text" class="inputs" id="player1" name="player1" placeholder="Player 1" value="Player 1" />
+
+                        <input for="add-book" type="submit" id="subBtn" value="Submit">
+                        <span type="button" id="clBtn" class="material-icons-outlined"> clear </span>
+                    </form>
+                </div>
+            </section>
+            
+            <section id="single-form-section">
+				<div id="form-container">
+					<h2 id="form-title">Player Information</h2>
+					<form id="add-book" onsubmit="return false">
+						<label for="player1" class="labels">Player 1 Name:</label>
+						<input type="text" class="inputs" id="player1" name="player1" placeholder="Player 1" value="Player 1" />
+
+                        <label for="player2" class="labels">Player 2 Name:</label>
+						<input type="text" class="inputs" id="player2" name="player2" placeholder="Player 2" value="Player 2" />
+
+						<input for="add-book" type="submit" id="subBtn" value="Submit">
+						<span type="button" id="clBtn" class="material-icons-outlined"> clear </span>
+					</form>
+				</div>
+			</section>
+
+
 		</main>
 	</body>
 </html>
