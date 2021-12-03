@@ -27,7 +27,7 @@
     backdrop-filter: blur(4px);
 }
 
-#form-container {
+.form-container {
 	display: flex;
 	flex-direction: column;
 	align-self: center;
@@ -40,7 +40,7 @@
 	background-color: white;
 }
 
-#form-title {
+.form-title {
 	margin: 0 auto;
 	text-align: center;
 }
@@ -56,24 +56,13 @@
 	height: 1.75rem;
 }
 
-#subBtn {
+.subBtn {
 	width: 6em;
 	height: 2em;
-	background-color: var(--clr-accent);
-	color: #fff;
+	/* background-color: var(--clr-accent); */
+	color: black;
 	border-radius: 26px;
 	margin: 0 auto;
 	font-size: 1rem;
 	cursor: pointer;
-}
-
-#clBtn {
-	position: relative;
-	bottom: 362px;
-	left: 241px;
-	font-size: 2rem;
-	color: #fff;
-	cursor: pointer;
-	width: fit-content;
-	height: auto;
 }
