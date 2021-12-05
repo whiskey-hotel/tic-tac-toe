@@ -14,12 +14,12 @@
 		<header id="title"><h1>Tic-Tac-Toe</h1></header>
 		<main>
 			<div class="container" id="playerSelectionContainer">
-				<button class="playerMode">Single Player Mode</button>
-				<button class="playerMode">Multiplayer Mode</button>
+				<button id="singlePlayerModeBtn" class="playerMode">Single Player Mode</button>
+				<button id="multiPlayerModeBtn"class="playerMode">Multiplayer Mode</button>
 			</div>
 
-			<section id="single-form-section">
-				<div class="form-container">
+			<section class="form-section" id="single-form-section">
+				<div class="form-container" id="single-form-container">
 					<h2 class="form-title">Player Information</h2>
 					<form class="add-player" onsubmit="return false">
 						<label for="player1" class="labels">Player 1 Name:</label>
@@ -30,8 +30,8 @@
 				</div>
 			</section>
 
-			<section id="multi-form-section">
-				<div class="form-container">
+			<section class="form-section" id="multi-form-section">
+				<div class="form-container" id="multi-form-container">
 					<h2 class="form-title">Player Information</h2>
 					<form class="add-player" onsubmit="return false">
 						<label for="player1" class="labels">Player 1 Name:</label>
