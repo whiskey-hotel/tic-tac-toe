@@ -33,11 +33,11 @@ const display = (() => {
 		form.reset();
 	};
 
-	const escapeForm = (eTarget, formContainer, formSection, HTMLform) => {
+	const escapeForm = (eTarget, formContainer, formSection, formValues) => {
 		if (!formContainer.contains(eTarget)) {
 			closeForm(formSection);
-			Array.from(HTMLform).forEach((formItem) => {
-				resetForm(formItem);
+			Array.from(formValues).forEach((f) => {
+				resetForm(f);
 			});
 		}
 	};
