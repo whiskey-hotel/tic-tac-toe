@@ -106,9 +106,13 @@ multiplayerForm &&
 if (!multiPlayer1) {
 	multiPlayer1 = players(pageState.getStorage("multiPlayer1").name, pageState.getStorage("multiPlayer1").type);
 	multiPlayer2 = players(pageState.getStorage("multiPlayer2").name, pageState.getStorage("multiPlayer2").type);
+	localStorage.removeItem("multiPlayer1");
+	localStorage.removeItem("multiPlayer2");
 }
 
 if (!singlePlayer1) {
 	singlePlayer1 = players(pageState.getStorage("singlePlayer1").name, pageState.getStorage("singlePlayer1").type);
 	cpu = players(pageState.getStorage("cpu").name, pageState.getStorage("cpu").type);
+	localStorage.removeItem("singlePlayer1");
+	localStorage.removeItem("cpu");
 }
