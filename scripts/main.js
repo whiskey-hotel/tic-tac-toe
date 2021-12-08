@@ -47,32 +47,68 @@ const display = (() => {
 	return { openForm, closeForm, resetForm, escapeForm };
 })();
 
-singlePlayerModeBtn.addEventListener("click", () => {
-	display.openForm(singleFormSection);
-});
+const pageState = (() => {
+	const populateStorage = (object) => {
+		localStorage.setItem(`${object}Key`, JSON.stringify(object));
+	};
 
-multiPlayerModeBtn.addEventListener("click", () => {
-	display.openForm(multiFormSection);
-});
+	const getStorage = (object) => {
+		object = JSON.parse(localStorage.getItem(`${object}Key`));
+	};
 
-singleFormSection.addEventListener("click", (e) => {
-	display.escapeForm(e.target, singleFormContainer, singleFormSection, newPlayerForm);
-});
+	return { populateStorage, getStorage };
+})();
 
-multiFormSection.addEventListener("click", (e) => {
-	display.escapeForm(e.target, multiFormContainer, multiFormSection, newPlayerForm);
-});
+singlePlayerModeBtn &&
+	singlePlayerModeBtn.addEventListener("click", () => {
+		display.openForm(singleFormSection);
+	});
 
-singlePlayerForm.addEventListener("submit", () => {
-	const singlePlayer1 = players(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value);
-	const cpu = players("CPU", "X");
-	console.log(singlePlayer1.getName());
-	console.log(cpu.getName());
-});
+multiPlayerModeBtn &&
+	multiPlayerModeBtn.addEventListener("click", () => {
+		display.openForm(multiFormSection);
+	});
 
-multiplayerForm.addEventListener("submit", () => {
-	const multiPlayer1 = players(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value);
-	const multiPlayer2 = players(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value);
-	console.log(multiPlayer1.getName());
-	console.log(multiPlayer2.getName());
-});
+singleFormSection &&
+	singleFormSection.addEventListener("click", (e) => {
+		display.escapeForm(e.target, singleFormContainer, singleFormSection, newPlayerForm);
+	});
+
+multiFormSection &&
+	multiFormSection.addEventListener("click", (e) => {
+		display.escapeForm(e.target, multiFormContainer, multiFormSection, newPlayerForm);
+	});
+
+singlePlayerForm &&
+	singlePlayerForm.addEventListener("submit", () => {
+		const singlePlayer1 = players(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value);
+		const cpu = players("CPU", "X");
+		pageState.populateStorage(singlePlayer1);
+		pageState.populateStorage(cpu);
+		window.location.href = "../html/gameboard.html";
+		console.log(singlePlayer1.getName());
+		console.log(cpu.getName());
+	});
+
+multiplayerForm &&
+	multiplayerForm.addEventListener("submit", () => {
+		const multiPlayer1 = players(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value);
+		const multiPlayer2 = players(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value);
+		pageState.populateStorage(multiPlayer1);
+		pageState.populateStorage(multiPlayer2);
+		window.location.href = "../html/gameboard.html";
+		console.log(multiPlayer1.getName());
+		console.log(multiPlayer2.getName());
+	});
+
+if (localStorage.getItem("multiPlayer1Key")) {
+	// pageState.getStorage(multiPlayer1);
+	let multiPlayer1 = localStorage.getItem("multiPlayer1Key");
+	console.log(multiPlayer1);
+}
+
+// 	if (!localStorage.getItem("bgcolor")) {
+// 	populateStorage();
+// } else {
+// 	setStyles();
+// }
