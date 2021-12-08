@@ -9,6 +9,10 @@ const singleFormContainer = document.getElementById("single-form-container");
 const multiFormContainer = document.getElementById("multi-form-container");
 const singlePlayerForm = document.getElementById("singlePlayerForm");
 const multiplayerForm = document.getElementById("multiplayerForm");
+let singlePlayer1;
+let cpu;
+let multiPlayer1;
+let multiPlayer2;
 
 const players = (name, playerType) => {
 	const _type = playerType;
@@ -48,12 +52,18 @@ const display = (() => {
 })();
 
 const pageState = (() => {
-	const populateStorage = (object) => {
-		localStorage.setItem(`${object}Key`, JSON.stringify(object));
+	const populateStorage = (objectName, objectType, objectKey) => {
+		localStorage.setItem(
+			objectKey,
+			JSON.stringify({
+				name: objectName,
+				type: objectType,
+			})
+		);
 	};
 
-	const getStorage = (object) => {
-		object = JSON.parse(localStorage.getItem(`${object}Key`));
+	const getStorage = (objectKey) => {
+		return JSON.parse(localStorage.getItem(objectKey));
 	};
 
 	return { populateStorage, getStorage };
@@ -81,34 +91,24 @@ multiFormSection &&
 
 singlePlayerForm &&
 	singlePlayerForm.addEventListener("submit", () => {
-		const singlePlayer1 = players(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value);
-		const cpu = players("CPU", "X");
-		pageState.populateStorage(singlePlayer1);
-		pageState.populateStorage(cpu);
+		pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "singlePlayer1");
+		pageState.populateStorage("CPU", "X", "cpu");
 		window.location.href = "../html/gameboard.html";
-		console.log(singlePlayer1.getName());
-		console.log(cpu.getName());
 	});
 
 multiplayerForm &&
 	multiplayerForm.addEventListener("submit", () => {
-		const multiPlayer1 = players(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value);
-		const multiPlayer2 = players(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value);
-		pageState.populateStorage(multiPlayer1);
-		pageState.populateStorage(multiPlayer2);
+		pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "multiPlayer1");
+		pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "multiPlayer2");
 		window.location.href = "../html/gameboard.html";
-		console.log(multiPlayer1.getName());
-		console.log(multiPlayer2.getName());
 	});
 
-if (localStorage.getItem("multiPlayer1Key")) {
-	// pageState.getStorage(multiPlayer1);
-	let multiPlayer1 = localStorage.getItem("multiPlayer1Key");
-	console.log(multiPlayer1);
+if (!multiPlayer1) {
+	multiPlayer1 = players(pageState.getStorage("multiPlayer1").name, pageState.getStorage("multiPlayer1").type);
+	multiPlayer2 = players(pageState.getStorage("multiPlayer2").name, pageState.getStorage("multiPlayer2").type);
 }
 
-// 	if (!localStorage.getItem("bgcolor")) {
-// 	populateStorage();
-// } else {
-// 	setStyles();
-// }
+if (!singlePlayer1) {
+	singlePlayer1 = players(pageState.getStorage("singlePlayer1").name, pageState.getStorage("singlePlayer1").type);
+	cpu = players(pageState.getStorage("cpu").name, pageState.getStorage("cpu").type);
+}
