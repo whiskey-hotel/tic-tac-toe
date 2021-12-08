@@ -15,17 +15,25 @@
 		<main>
 			<div class="container" id="playerSelectionContainer">
 				<button id="singlePlayerModeBtn" class="playerMode">Single Player Mode</button>
-				<button id="multiPlayerModeBtn"class="playerMode">Multiplayer Mode</button>
+				<button id="multiPlayerModeBtn" class="playerMode">Multiplayer Mode</button>
 			</div>
 
 			<section class="form-section" id="single-form-section">
 				<div class="form-container" id="single-form-container">
 					<h2 class="form-title">Player Information</h2>
-					<form class="add-player" onsubmit="return false">
-						<label for="player1" class="labels">Player 1 Name:</label>
-						<input type="text" class="inputs" id="player1" name="player1" placeholder="Player 1" value="Player 1" />
+					<form class="add-player" id="singlePlayerForm" onsubmit="return false">
+						<label for="singlePlayer1" class="labels">Player 1 Name:</label>
+						<input type="text" class="inputs" id="singlePlayer1" name="player1" placeholder="Player 1" value="Player 1" />
+						<p>Select your board symbol:</p>
+						<div>
+							<input type="radio" name="singleInputType" id="singleChoiceX" value="X" />
+							<label for="singleChoiceX">X</label>
 
-						<input for="add-player" type="submit" class="subBtn" value="Submit" />
+							<input type="radio" name="singleInputType" id="singleChoiceO" value="O" />
+							<label for="singleChoiceO">O</label>
+						</div>
+
+						<input for="singlePlayerForm" type="submit" class="subBtn" value="Submit" />
 					</form>
 				</div>
 			</section>
@@ -33,14 +41,30 @@
 			<section class="form-section" id="multi-form-section">
 				<div class="form-container" id="multi-form-container">
 					<h2 class="form-title">Player Information</h2>
-					<form class="add-player" onsubmit="return false">
-						<label for="player1" class="labels">Player 1 Name:</label>
-						<input type="text" class="inputs" id="player1" name="player1" placeholder="Player 1" value="Player 1" />
+					<form class="add-player" id="multiplayerForm" onsubmit="return false">
+						<label for="multiPlayer1" class="labels">Player 1 Name:</label>
+						<input type="text" class="inputs" id="multiPlayer1" name="player1" placeholder="Player 1" value="Player 1" />
+						<p>Select your board symbol:</p>
+						<div>
+							<input type="radio" name="multiInputType1" id="multiChoice1-X" value="X" />
+							<label for="multiChoice1-X">X</label>
 
-						<label for="player2" class="labels">Player 2 Name:</label>
-						<input type="text" class="inputs" id="player2" name="player2" placeholder="Player 2" value="Player 2" />
+							<input type="radio" name="multiInputType1" id="multiChoice1-O" value="O" />
+							<label for="multiChoice1-O">O</label>
+						</div>
 
-						<input for="add-player" type="submit" class="subBtn" value="Submit" />
+						<label for="multiPlayer2" class="labels">Player 2 Name:</label>
+						<input type="text" class="inputs" id="multiPlayer2" name="player2" placeholder="Player 2" value="Player 2" />
+						<p>Select your board symbol:</p>
+						<div>
+							<input type="radio" name="multiInputType2" id="multiChoiceX-2" value="X" />
+							<label for="multiChoiceX-2">X</label>
+
+							<input type="radio" name="multiInputType2" id="multiChoiceO-2" value="O" />
+							<label for="multiChoiceO-2">O</label>
+						</div>
+
+						<input for="multiplayerForm" type="submit" class="subBtn" value="Submit" />
 					</form>
 				</div>
 			</section>

@@ -7,6 +7,8 @@ const formSection = document.getElementsByClassName("form-section");
 const formContainer = document.getElementsByClassName("form-container");
 const singleFormContainer = document.getElementById("single-form-container");
 const multiFormContainer = document.getElementById("multi-form-container");
+const singlePlayerForm = document.getElementById("singlePlayerForm");
+const multiplayerForm = document.getElementById("multiplayerForm");
 
 const players = (name, playerType) => {
 	const _type = playerType;
@@ -61,5 +63,16 @@ multiFormSection.addEventListener("click", (e) => {
 	display.escapeForm(e.target, multiFormContainer, multiFormSection, newPlayerForm);
 });
 
-const player1 = players("justin", "X");
-const player2 = players("justin's opponent", "O");
+singlePlayerForm.addEventListener("submit", () => {
+	const singlePlayer1 = players(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value);
+	const cpu = players("CPU", "X");
+	console.log(singlePlayer1.getName());
+	console.log(cpu.getName());
+});
+
+multiplayerForm.addEventListener("submit", () => {
+	const multiPlayer1 = players(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value);
+	const multiPlayer2 = players(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value);
+	console.log(multiPlayer1.getName());
+	console.log(multiPlayer2.getName());
+});

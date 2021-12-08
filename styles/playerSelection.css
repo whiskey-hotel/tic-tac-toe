@@ -38,6 +38,11 @@
 	text-align: center;
 }
 
+.add-player{
+	display: flex;
+	flex-direction: column;
+}
+
 .labels {
 	font-weight: 800;
 	margin-bottom: 0.25em;
