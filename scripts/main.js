@@ -10,10 +10,9 @@ const multiFormContainer = document.getElementById("multi-form-container");
 const singlePlayerForm = document.getElementById("singlePlayerForm");
 const multiplayerForm = document.getElementById("multiplayerForm");
 const gameboard = document.getElementsByClassName("boardSelectionLayout");
-let singlePlayer1;
-let cpu;
-let multiPlayer1;
-let multiPlayer2;
+let player1;
+let player2;
+
 
 const players = (name, playerType) => {
 	const _type = playerType;
@@ -26,6 +25,8 @@ const players = (name, playerType) => {
 
 	return { getName, updateChoices };
 };
+
+
 
 const display = (() => {
 	const openForm = (formID) => {
@@ -52,6 +53,8 @@ const display = (() => {
 	return { openForm, closeForm, resetForm, escapeForm };
 })();
 
+
+
 const pageState = (() => {
 	const populateStorage = (objectName, objectType, objectKey) => {
 		localStorage.setItem(
@@ -69,6 +72,17 @@ const pageState = (() => {
 
 	return { populateStorage, getStorage };
 })();
+
+
+
+const game = (() => {
+	const test = () => {
+		console.log("test");
+	};
+	return { test };
+})();
+
+
 
 singlePlayerModeBtn &&
 	singlePlayerModeBtn.addEventListener("click", () => {
@@ -92,15 +106,15 @@ multiFormSection &&
 
 singlePlayerForm &&
 	singlePlayerForm.addEventListener("submit", () => {
-		pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "singlePlayer1");
-		pageState.populateStorage("CPU", "X", "cpu");
+		pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "player1");
+		pageState.populateStorage("CPU", "X", "player2");
 		window.location.href = "../html/gameboard.html";
 	});
 
 multiplayerForm &&
 	multiplayerForm.addEventListener("submit", () => {
-		pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "multiPlayer1");
-		pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "multiPlayer2");
+		pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "player1");
+		pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "player2");
 		window.location.href = "../html/gameboard.html";
 	});
 
@@ -108,20 +122,15 @@ gameboard &&
 	Array.from(gameboard).forEach((g) => {
 		g.addEventListener("click", () => {
 			console.log("board-click");
-			g.textContent = "X"
+			g.textContent = "X";
 		});
 	});
 
-if (!multiPlayer1) {
-	multiPlayer1 = players(pageState.getStorage("multiPlayer1").name, pageState.getStorage("multiPlayer1").type);
-	multiPlayer2 = players(pageState.getStorage("multiPlayer2").name, pageState.getStorage("multiPlayer2").type);
-	localStorage.removeItem("multiPlayer1");
-	localStorage.removeItem("multiPlayer2");
+if (!player1) {
+	player1 = players(pageState.getStorage("player1").name, pageState.getStorage("player1").type);
+	player2 = players(pageState.getStorage("player2").name, pageState.getStorage("player2").type);
+	localStorage.removeItem("player1");
+	localStorage.removeItem("player2");
 }
 
-if (!singlePlayer1) {
-	singlePlayer1 = players(pageState.getStorage("singlePlayer1").name, pageState.getStorage("singlePlayer1").type);
-	cpu = players(pageState.getStorage("cpu").name, pageState.getStorage("cpu").type);
-	localStorage.removeItem("singlePlayer1");
-	localStorage.removeItem("cpu");
-}
+
