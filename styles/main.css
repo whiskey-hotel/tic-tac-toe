@@ -45,17 +45,21 @@
     font-size: 2rem;
 }
 
-#one {
+#zero {
 	border-bottom: black solid 5px;
 	border-right: black solid 5px;
 }
 
-#two {
+#one {
 	border-bottom: black solid 5px;
 	border-right: black solid 5px;
 }
+#two {
+	border-bottom: black solid 5px;
+}
 #three {
 	border-bottom: black solid 5px;
+	border-right: black solid 5px;
 }
 #four {
 	border-bottom: black solid 5px;
@@ -63,14 +67,10 @@
 }
 #five {
 	border-bottom: black solid 5px;
-	border-right: black solid 5px;
 }
 #six {
-	border-bottom: black solid 5px;
-}
-#seven {
 	border-right: black solid 5px;
 }
-#eight {
+#seven {
 	border-right: black solid 5px;
 }

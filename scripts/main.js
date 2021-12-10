@@ -9,6 +9,7 @@ const singleFormContainer = document.getElementById("single-form-container");
 const multiFormContainer = document.getElementById("multi-form-container");
 const singlePlayerForm = document.getElementById("singlePlayerForm");
 const multiplayerForm = document.getElementById("multiplayerForm");
+const gameboard = document.getElementsByClassName("boardSelectionLayout");
 let singlePlayer1;
 let cpu;
 let multiPlayer1;
@@ -101,6 +102,14 @@ multiplayerForm &&
 		pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "multiPlayer1");
 		pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "multiPlayer2");
 		window.location.href = "../html/gameboard.html";
+	});
+
+gameboard &&
+	Array.from(gameboard).forEach((g) => {
+		g.addEventListener("click", () => {
+			console.log("board-click");
+			g.textContent = "X"
+		});
 	});
 
 if (!multiPlayer1) {
