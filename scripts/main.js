@@ -32,6 +32,16 @@ const game = (() => {
 })();
 
 const playerInfoDisplay = (() => {
+	const singlePlayerModeBtn = document.getElementById("singlePlayerModeBtn");
+	const multiPlayerModeBtn = document.getElementById("multiPlayerModeBtn");
+	const singleFormSection = document.getElementById("single-form-section");
+	const multiFormSection = document.getElementById("multi-form-section");
+	const newPlayerForm = document.getElementsByClassName("add-player");
+	const singleFormContainer = document.getElementById("single-form-container");
+	const multiFormContainer = document.getElementById("multi-form-container");
+	const singlePlayerForm = document.getElementById("singlePlayerForm");
+	const multiplayerForm = document.getElementById("multiplayerForm");
+
 	const openForm = (formID) => {
 		formID.style.display = "flex";
 	};
@@ -53,7 +63,39 @@ const playerInfoDisplay = (() => {
 		}
 	};
 
-	return { openForm, closeForm, resetForm, escapeForm };
+	singlePlayerModeBtn &&
+		singlePlayerModeBtn.addEventListener("click", () => {
+			openForm(singleFormSection);
+		});
+
+	multiPlayerModeBtn &&
+		multiPlayerModeBtn.addEventListener("click", () => {
+			openForm(multiFormSection);
+		});
+
+	singleFormSection &&
+		singleFormSection.addEventListener("click", (e) => {
+			escapeForm(e.target, singleFormContainer, singleFormSection, newPlayerForm);
+		});
+
+	multiFormSection &&
+		multiFormSection.addEventListener("click", (e) => {
+			escapeForm(e.target, multiFormContainer, multiFormSection, newPlayerForm);
+		});
+
+	singlePlayerForm &&
+		singlePlayerForm.addEventListener("submit", () => {
+			pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "player1");
+			pageState.populateStorage("CPU", "X", "player2");
+			window.location.href = "../html/gameboard.html";
+		});
+
+	multiplayerForm &&
+		multiplayerForm.addEventListener("submit", () => {
+			pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "player1");
+			pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "player2");
+			window.location.href = "../html/gameboard.html";
+		});
 })();
 
 const pageState = (() => {
@@ -76,52 +118,6 @@ const pageState = (() => {
 	};
 
 	return { populateStorage, getStorage, deleteStorage };
-})();
-
-const display = (() => {
-	const singlePlayerModeBtn = document.getElementById("singlePlayerModeBtn");
-	const multiPlayerModeBtn = document.getElementById("multiPlayerModeBtn");
-	const singleFormSection = document.getElementById("single-form-section");
-	const multiFormSection = document.getElementById("multi-form-section");
-	const newPlayerForm = document.getElementsByClassName("add-player");
-	const singleFormContainer = document.getElementById("single-form-container");
-	const multiFormContainer = document.getElementById("multi-form-container");
-	const singlePlayerForm = document.getElementById("singlePlayerForm");
-	const multiplayerForm = document.getElementById("multiplayerForm");
-
-	singlePlayerModeBtn &&
-		singlePlayerModeBtn.addEventListener("click", () => {
-			playerInfoDisplay.openForm(singleFormSection);
-		});
-
-	multiPlayerModeBtn &&
-		multiPlayerModeBtn.addEventListener("click", () => {
-			playerInfoDisplay.openForm(multiFormSection);
-		});
-
-	singleFormSection &&
-		singleFormSection.addEventListener("click", (e) => {
-			playerInfoDisplay.escapeForm(e.target, singleFormContainer, singleFormSection, newPlayerForm);
-		});
-
-	multiFormSection &&
-		multiFormSection.addEventListener("click", (e) => {
-			playerInfoDisplay.escapeForm(e.target, multiFormContainer, multiFormSection, newPlayerForm);
-		});
-
-	singlePlayerForm &&
-		singlePlayerForm.addEventListener("submit", () => {
-			pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "player1");
-			pageState.populateStorage("CPU", "X", "player2");
-			window.location.href = "../html/gameboard.html";
-		});
-
-	multiplayerForm &&
-		multiplayerForm.addEventListener("submit", () => {
-			pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "player1");
-			pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "player2");
-			window.location.href = "../html/gameboard.html";
-		});
 })();
 
 if (!player1) {
