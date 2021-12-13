@@ -2,34 +2,51 @@ let player1;
 let player2;
 
 const players = (name, playerType) => {
-	const _type = playerType;
-	const _playerPositions = [null, null, null, null, null, null, null, null, null];
+	const type = playerType;
 	const getName = () => name;
 
-	const updateChoices = (index) => {
-		_playerPositions[index] = _type;
-	};
-
-	return { getName, updateChoices };
+	return { getName, type };
 };
 
+
 const gameBoard = (() => {
+	//display game i/o here
 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
 	let gameboard = [];
 
 	gameboardElement &&
 		Array.from(gameboardElement).forEach((g) => {
 			g.addEventListener("click", () => {
-				console.log("board-click");
-				g.textContent = "X";
+				if (gameboard.length % 2 == 0) {
+					let player1Input = game.updateChoices(+g.dataset.value, player1.type);
+					g.textContent = player1Input;
+					gameboard.push(player1.type);
+				} else {
+					let player2Input = game.updateChoices(+g.dataset.value, player2.type);
+					g.textContent = player2Input;
+					gameboard.push(player2.type);
+				}
 			});
 		});
 })();
 
+
 const game = (() => {
-	const test = "test";
-	return { test };
+	const _playerPositions = [null, null, null, null, null, null, null, null, null];
+	const updateChoices = (index, playerType) => {
+		if (!_playerPositions[index]) {
+			_playerPositions[index] = playerType;
+			return playerType;
+		} else {
+			return _playerPositions[index];
+		}
+	};
+	//determine if there are three in a row or a tie
+	const play = () => {};
+
+	return { play, updateChoices, _playerPositions };
 })();
+
 
 const playerInfoDisplay = (() => {
 	const singlePlayerModeBtn = document.getElementById("singlePlayerModeBtn");
@@ -98,6 +115,7 @@ const playerInfoDisplay = (() => {
 		});
 })();
 
+
 const pageState = (() => {
 	const populateStorage = (objectName, objectType, objectKey) => {
 		localStorage.setItem(
@@ -120,9 +138,10 @@ const pageState = (() => {
 	return { populateStorage, getStorage, deleteStorage };
 })();
 
+
 if (!player1) {
 	player1 = players(pageState.getStorage("player1").name, pageState.getStorage("player1").type);
 	player2 = players(pageState.getStorage("player2").name, pageState.getStorage("player2").type);
-	pageState.deleteStorage("player1");
-	pageState.deleteStorage("player2");
+	// pageState.deleteStorage("player1");
+	// pageState.deleteStorage("player2");
 }
