@@ -15,8 +15,10 @@ const gameBoard = (() => {
 	gameboardElement &&
 		Array.from(gameboardElement).forEach((g) => {
 			g.addEventListener("click", () => {
+				let index = +g.dataset.value;
+
 				if (gameboard.length % 2 == 0) {
-					let player1Input = game.updatePositions(+g.dataset.value, player1.getType());
+					let player1Input = game.updatePositions(index, player1.getType());
 					if (player1Input) {
 						g.textContent = player1Input;
 						gameboard.push(player1Input);
@@ -25,7 +27,7 @@ const gameBoard = (() => {
 						}
 					}
 				} else {
-					let player2Input = game.updatePositions(+g.dataset.value, player2.getType());
+					let player2Input = game.updatePositions(index, player2.getType());
 					if (player2Input) {
 						g.textContent = player2Input;
 						gameboard.push(player2Input);
