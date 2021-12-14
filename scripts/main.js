@@ -2,15 +2,13 @@ let player1;
 let player2;
 
 const players = (name, playerType) => {
-	const type = playerType;
 	const getName = () => name;
+	const getType = () => playerType;
 
-	return { getName, type };
+	return { getName, getType };
 };
 
-
 const gameBoard = (() => {
-	//display game i/o here
 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
 	let gameboard = [];
 
@@ -18,35 +16,59 @@ const gameBoard = (() => {
 		Array.from(gameboardElement).forEach((g) => {
 			g.addEventListener("click", () => {
 				if (gameboard.length % 2 == 0) {
-					let player1Input = game.updateChoices(+g.dataset.value, player1.type);
-					g.textContent = player1Input;
-					gameboard.push(player1.type);
+					let player1Input = game.updatePositions(+g.dataset.value, player1.getType());
+					if (player1Input) {
+						g.textContent = player1Input;
+						gameboard.push(player1Input);
+						if (gameboard.length > 4) {
+							console.log(game.gameOver(player1Input));
+						}
+					}
 				} else {
-					let player2Input = game.updateChoices(+g.dataset.value, player2.type);
-					g.textContent = player2Input;
-					gameboard.push(player2.type);
+					let player2Input = game.updatePositions(+g.dataset.value, player2.getType());
+					if (player2Input) {
+						g.textContent = player2Input;
+						gameboard.push(player2Input);
+						if (gameboard.length > 4) {
+							console.log(game.gameOver(player2Input));
+						}
+					}
 				}
 			});
 		});
 })();
 
-
 const game = (() => {
 	const _playerPositions = [null, null, null, null, null, null, null, null, null];
-	const updateChoices = (index, playerType) => {
+	const updatePositions = (index, playerType) => {
 		if (!_playerPositions[index]) {
 			_playerPositions[index] = playerType;
 			return playerType;
 		} else {
-			return _playerPositions[index];
+			return null;
 		}
 	};
-	//determine if there are three in a row or a tie
-	const play = () => {};
 
-	return { play, updateChoices, _playerPositions };
+	const gameOver = (type) => {
+		switch (true) {
+			default:
+				return null;
+			//Horizontal
+			case _playerPositions[0] == type && _playerPositions[1] == type && _playerPositions[2] == type:
+			case _playerPositions[3] == type && _playerPositions[4] == type && _playerPositions[5] == type:
+			case _playerPositions[6] == type && _playerPositions[7] == type && _playerPositions[8] == type:
+			//Vertical
+			case _playerPositions[0] == type && _playerPositions[3] == type && _playerPositions[6] == type:
+			case _playerPositions[1] == type && _playerPositions[4] == type && _playerPositions[7] == type:
+			case _playerPositions[2] == type && _playerPositions[5] == type && _playerPositions[8] == type:
+			//Diagonal
+			case _playerPositions[0] == type && _playerPositions[4] == type && _playerPositions[8] == type:
+			case _playerPositions[2] == type && _playerPositions[4] == type && _playerPositions[6] == type:
+				return `Three in a row for ${type}`;
+		}
+	};
+	return { gameOver, updatePositions };
 })();
-
 
 const playerInfoDisplay = (() => {
 	const singlePlayerModeBtn = document.getElementById("singlePlayerModeBtn");
@@ -115,7 +137,6 @@ const playerInfoDisplay = (() => {
 		});
 })();
 
-
 const pageState = (() => {
 	const populateStorage = (objectName, objectType, objectKey) => {
 		localStorage.setItem(
@@ -137,7 +158,6 @@ const pageState = (() => {
 
 	return { populateStorage, getStorage, deleteStorage };
 })();
-
 
 if (!player1) {
 	player1 = players(pageState.getStorage("player1").name, pageState.getStorage("player1").type);
