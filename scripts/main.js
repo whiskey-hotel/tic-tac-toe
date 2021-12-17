@@ -10,33 +10,55 @@ const players = (name, playerType) => {
 
 const gameBoard = (() => {
 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
-	let gameboard = [];
+	const resetGame = document.getElementById("resetGame");
+	const newGame = document.getElementById("newGame");
+	let turnTracker = [];
 
 	gameboardElement &&
 		Array.from(gameboardElement).forEach((g) => {
 			g.addEventListener("click", () => {
 				let index = +g.dataset.value;
 
-				if (gameboard.length % 2 == 0) {
+				if (turnTracker.length % 2 == 0) {
 					let player1Input = game.updatePositions(index, player1.getType());
 					if (player1Input) {
 						g.textContent = player1Input;
-						gameboard.push(player1Input);
-						if (gameboard.length > 4) {
-							console.log(game.gameOver(player1Input));
+						turnTracker.push(player1Input);
+						if (turnTracker.length > 4) {
+							game.gameOver(player1Input, player1.getName());
 						}
 					}
 				} else {
 					let player2Input = game.updatePositions(index, player2.getType());
 					if (player2Input) {
 						g.textContent = player2Input;
-						gameboard.push(player2Input);
-						if (gameboard.length > 4) {
-							console.log(game.gameOver(player2Input));
+						turnTracker.push(player2Input);
+						if (turnTracker.length > 4) {
+							game.gameOver(player2Input, player2.getName());
 						}
 					}
 				}
 			});
+		});
+
+	const reset = () => {
+		Array.from(gameboardElement).forEach((g) => {
+			g.textContent = "";
+		});
+		game.reset();
+		winnerDisplay.reset();
+		turnTracker = [];
+	};
+
+	resetGame &&
+		resetGame.addEventListener("click", () => {
+			reset();
+		});
+
+	newGame &&
+		newGame.addEventListener("click", () => {
+			reset();
+			window.location.href = "../html/playerSelection.html";
 		});
 })();
 
@@ -51,7 +73,13 @@ const game = (() => {
 		}
 	};
 
-	const gameOver = (type) => {
+	const reset = () => {
+		_playerPositions.forEach((element, i) => {
+			_playerPositions[i] = null;
+		});
+	};
+
+	const gameOver = (type, name) => {
 		switch (true) {
 			default:
 				return null;
@@ -66,10 +94,24 @@ const game = (() => {
 			//Diagonal
 			case _playerPositions[0] == type && _playerPositions[4] == type && _playerPositions[8] == type:
 			case _playerPositions[2] == type && _playerPositions[4] == type && _playerPositions[6] == type:
-				return `Three in a row for ${type}`;
+				winnerDisplay.results(name);
+				break;
 		}
 	};
-	return { gameOver, updatePositions };
+	return { gameOver, updatePositions, reset };
+})();
+
+const winnerDisplay = (() => {
+	const winner = document.getElementById("winner");
+
+	const results = (name) => {
+		winner.textContent = `${name} is the winner`;
+	};
+
+	const reset = () => {
+		winner.textContent = "";
+	};
+	return { results, reset };
 })();
 
 const playerInfoDisplay = (() => {
@@ -128,6 +170,7 @@ const playerInfoDisplay = (() => {
 		singlePlayerForm.addEventListener("submit", () => {
 			pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "player1");
 			pageState.populateStorage("CPU", "X", "player2");
+			singlePlayerForm.reset();
 			window.location.href = "../html/gameboard.html";
 		});
 
@@ -135,6 +178,7 @@ const playerInfoDisplay = (() => {
 		multiplayerForm.addEventListener("submit", () => {
 			pageState.populateStorage(multiplayerForm.elements["multiPlayer1"].value, multiplayerForm.elements["multiInputType1"].value, "player1");
 			pageState.populateStorage(multiplayerForm.elements["multiPlayer2"].value, multiplayerForm.elements["multiInputType2"].value, "player2");
+			multiplayerForm.reset();
 			window.location.href = "../html/gameboard.html";
 		});
 })();

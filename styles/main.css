@@ -6,11 +6,12 @@
 
 .container {
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
 	height: 85vh;
     flex-wrap: wrap;
     flex-direction: column;
+	flex-grow: 1;
 }
 
 #playButtonContainer{
@@ -36,6 +37,15 @@
 	grid-template-rows: repeat(3, 1fr);
 	width: 62%;
 	height: 29%;
+	/* margin-bottom: auto; */
+}
+
+#winner{
+	font: 1em;
+}
+
+.gameButton{
+	display: flex;
 }
 
 .boardSelectionLayout {
