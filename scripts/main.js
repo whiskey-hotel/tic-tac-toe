@@ -183,6 +183,44 @@ const playerInfoDisplay = (() => {
 		});
 })();
 
+const playerInfoTypeCheck = (() => {
+	const multiplayerForm = document.getElementById("multiplayerForm");
+	const player1Type = multiplayerForm.elements["multiInputType1"];
+	const player2Type = multiplayerForm.elements["multiInputType2"];
+	const player1_O_Sel = document.getElementById("multiChoice1-O");
+	const player1_X_Sel = document.getElementById("multiChoice1-X");
+	const player2_O_Sel = document.getElementById("multiChoiceO-2");
+	const player2_X_Sel = document.getElementById("multiChoiceX-2");
+
+	player1Type &&
+		Array.from(player1Type).forEach((p1) => {
+			p1.addEventListener("click", () => {
+				switch (true) {
+					case player1_X_Sel.checked:
+						player2_O_Sel.checked = true;
+						break;
+					case player1_O_Sel.checked:
+						player2_X_Sel.checked = true;
+						break;
+				}
+			});
+		});
+
+	player2Type &&
+		Array.from(player2Type).forEach((p2) => {
+			p2.addEventListener("click", () => {
+				switch (true) {
+					case player2_X_Sel.checked:
+						player1_O_Sel.checked = true;
+						break;
+					case player2_O_Sel.checked:
+						player1_X_Sel.checked = true;
+						break;
+				}
+			});
+		});
+})();
+
 const pageState = (() => {
 	const populateStorage = (objectName, objectType, objectKey) => {
 		localStorage.setItem(
