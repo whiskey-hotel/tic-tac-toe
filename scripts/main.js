@@ -17,10 +17,7 @@ const gameBoard = (() => {
 	let player2GameStatus = null;
 
 	const gameboardEventHandler = (g) => {
-		if (player1GameStatus == "game") {
-			gameBoardRemove();
-			return;
-		} else if (player2GameStatus == "game") {
+		if (player1GameStatus == "game" || player2GameStatus == "game") {
 			gameBoardRemove();
 			return;
 		}
@@ -36,6 +33,10 @@ const gameBoard = (() => {
 					player1GameStatus = game.gameOver(player1Input, player1.getName());
 				}
 			}
+
+			if (player1GameStatus == null) {
+				cpuInput();
+			}
 		} else {
 			let player2Input = game.updatePositions(index, player2.getType());
 			if (player2Input) {
@@ -44,6 +45,25 @@ const gameBoard = (() => {
 				if (turnTracker.length > 4) {
 					player2GameStatus = game.gameOver(player2Input, player2.getName());
 				}
+			}
+		}
+	};
+
+	const cpuInput = () => {
+		if (player2.getName() == "CPU") {
+			let positionCheck;
+			let index = null;
+			while (!positionCheck) {
+				index = Math.floor(Math.random() * 9);
+				positionCheck = game.updatePositions(index, player2.getType());
+			}
+			let g = Array.from(gameboardElement).find(function (item) {
+				return index == +item.dataset.value;
+			});
+			g.textContent = positionCheck;
+			turnTracker.push(positionCheck);
+			if (turnTracker.length > 4) {
+				player2GameStatus = game.gameOver(positionCheck, player2.getName());
 			}
 		}
 	};
