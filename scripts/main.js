@@ -92,7 +92,7 @@ const gameBoard = (() => {
 		game.reset();
 		winnerDisplay.reset();
 		turnTracker = [];
-		gameboardInput();
+		// gameboardInput();
 		player1GameStatus = null;
 		player2GameStatus = null;
 	};
