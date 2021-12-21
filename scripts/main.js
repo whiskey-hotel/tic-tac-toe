@@ -32,6 +32,8 @@ const gameBoard = (() => {
 				if (turnTracker.length > 4) {
 					player1GameStatus = game.gameOver(player1Input, player1.getName());
 				}
+			} else {
+				return;
 			}
 
 			if (player1GameStatus == null) {
@@ -51,9 +53,9 @@ const gameBoard = (() => {
 
 	const cpuInput = () => {
 		if (player2.getName() == "CPU") {
-			let positionCheck;
+			let positionCheck = null;
 			let index = null;
-			while (!positionCheck) {
+			while (positionCheck == null) {
 				index = Math.floor(Math.random() * 9);
 				positionCheck = game.updatePositions(index, player2.getType());
 			}
@@ -225,7 +227,11 @@ const playerInfoDisplay = (() => {
 	singlePlayerForm &&
 		singlePlayerForm.addEventListener("submit", () => {
 			pageState.populateStorage(singlePlayerForm.elements["singlePlayer1"].value, singlePlayerForm.elements["singleInputType"].value, "player1");
-			pageState.populateStorage("CPU", "X", "player2");
+			if (singlePlayerForm.elements["singleInputType"].value == "X") {
+				pageState.populateStorage("CPU", "O", "player2");
+			} else {
+				pageState.populateStorage("CPU", "X", "player2");
+			}
 			singlePlayerForm.reset();
 			window.location.href = "../html/gameboard.html";
 		});
@@ -241,6 +247,7 @@ const playerInfoDisplay = (() => {
 
 const playerInfoTypeCheck = (() => {
 	const multiplayerForm = document.getElementById("multiplayerForm");
+
 	if (multiplayerForm) {
 		const player1Type = multiplayerForm.elements["multiInputType1"];
 		const player2Type = multiplayerForm.elements["multiInputType2"];
