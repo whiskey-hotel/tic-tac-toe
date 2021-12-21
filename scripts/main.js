@@ -8,60 +8,6 @@ const players = (name, playerType) => {
 	return { getName, getType };
 };
 
-// const gameBoard = (() => {
-// 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
-// 	const resetGame = document.getElementById("resetGame");
-// 	const newGame = document.getElementById("newGame");
-// 	let turnTracker = [];
-
-// 	gameboardElement &&
-// 		Array.from(gameboardElement).forEach((g) => {
-// 			g.addEventListener("click", () => {
-// 				let index = +g.dataset.value;
-
-// 				if (turnTracker.length % 2 == 0) {
-// 					let player1Input = game.updatePositions(index, player1.getType());
-// 					if (player1Input) {
-// 						g.textContent = player1Input;
-// 						turnTracker.push(player1Input);
-// 						if (turnTracker.length > 4) {
-// 							game.gameOver(player1Input, player1.getName());
-// 						}
-// 					}
-// 				} else {
-// 					let player2Input = game.updatePositions(index, player2.getType());
-// 					if (player2Input) {
-// 						g.textContent = player2Input;
-// 						turnTracker.push(player2Input);
-// 						if (turnTracker.length > 4) {
-// 							game.gameOver(player2Input, player2.getName());
-// 						}
-// 					}
-// 				}
-// 			});
-// 		});
-
-// 	const reset = () => {
-// 		Array.from(gameboardElement).forEach((g) => {
-// 			g.textContent = "";
-// 		});
-// 		game.reset();
-// 		winnerDisplay.reset();
-// 		turnTracker = [];
-// 	};
-
-// 	resetGame &&
-// 		resetGame.addEventListener("click", () => {
-// 			reset();
-// 		});
-
-// 	newGame &&
-// 		newGame.addEventListener("click", () => {
-// 			reset();
-// 			window.location.href = "../html/playerSelection.html";
-// 		});
-// })();
-
 const gameBoard = (() => {
 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
 	const resetGame = document.getElementById("resetGame");
