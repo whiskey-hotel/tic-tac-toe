@@ -8,38 +8,116 @@ const players = (name, playerType) => {
 	return { getName, getType };
 };
 
+// const gameBoard = (() => {
+// 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
+// 	const resetGame = document.getElementById("resetGame");
+// 	const newGame = document.getElementById("newGame");
+// 	let turnTracker = [];
+
+// 	gameboardElement &&
+// 		Array.from(gameboardElement).forEach((g) => {
+// 			g.addEventListener("click", () => {
+// 				let index = +g.dataset.value;
+
+// 				if (turnTracker.length % 2 == 0) {
+// 					let player1Input = game.updatePositions(index, player1.getType());
+// 					if (player1Input) {
+// 						g.textContent = player1Input;
+// 						turnTracker.push(player1Input);
+// 						if (turnTracker.length > 4) {
+// 							game.gameOver(player1Input, player1.getName());
+// 						}
+// 					}
+// 				} else {
+// 					let player2Input = game.updatePositions(index, player2.getType());
+// 					if (player2Input) {
+// 						g.textContent = player2Input;
+// 						turnTracker.push(player2Input);
+// 						if (turnTracker.length > 4) {
+// 							game.gameOver(player2Input, player2.getName());
+// 						}
+// 					}
+// 				}
+// 			});
+// 		});
+
+// 	const reset = () => {
+// 		Array.from(gameboardElement).forEach((g) => {
+// 			g.textContent = "";
+// 		});
+// 		game.reset();
+// 		winnerDisplay.reset();
+// 		turnTracker = [];
+// 	};
+
+// 	resetGame &&
+// 		resetGame.addEventListener("click", () => {
+// 			reset();
+// 		});
+
+// 	newGame &&
+// 		newGame.addEventListener("click", () => {
+// 			reset();
+// 			window.location.href = "../html/playerSelection.html";
+// 		});
+// })();
+
 const gameBoard = (() => {
 	const gameboardElement = document.getElementsByClassName("boardSelectionLayout");
 	const resetGame = document.getElementById("resetGame");
 	const newGame = document.getElementById("newGame");
 	let turnTracker = [];
+	let player1GameStatus = null;
+	let player2GameStatus = null;
 
-	gameboardElement &&
-		Array.from(gameboardElement).forEach((g) => {
-			g.addEventListener("click", () => {
-				let index = +g.dataset.value;
+	const gameboardEventHandler = (g) => {
+		if (player1GameStatus == "game") {
+			gameBoardRemove();
+			return;
+		} else if (player2GameStatus == "game") {
+			gameBoardRemove();
+			return;
+		}
 
-				if (turnTracker.length % 2 == 0) {
-					let player1Input = game.updatePositions(index, player1.getType());
-					if (player1Input) {
-						g.textContent = player1Input;
-						turnTracker.push(player1Input);
-						if (turnTracker.length > 4) {
-							game.gameOver(player1Input, player1.getName());
-						}
-					}
-				} else {
-					let player2Input = game.updatePositions(index, player2.getType());
-					if (player2Input) {
-						g.textContent = player2Input;
-						turnTracker.push(player2Input);
-						if (turnTracker.length > 4) {
-							game.gameOver(player2Input, player2.getName());
-						}
-					}
+		let index = +g.dataset.value;
+
+		if (turnTracker.length % 2 == 0) {
+			let player1Input = game.updatePositions(index, player1.getType());
+			if (player1Input) {
+				g.textContent = player1Input;
+				turnTracker.push(player1Input);
+				if (turnTracker.length > 4) {
+					player1GameStatus = game.gameOver(player1Input, player1.getName());
 				}
+			}
+		} else {
+			let player2Input = game.updatePositions(index, player2.getType());
+			if (player2Input) {
+				g.textContent = player2Input;
+				turnTracker.push(player2Input);
+				if (turnTracker.length > 4) {
+					player2GameStatus = game.gameOver(player2Input, player2.getName());
+				}
+			}
+		}
+	};
+
+	const gameboardInput = () => {
+		gameboardElement &&
+			Array.from(gameboardElement).forEach((g) => {
+				g.addEventListener("click", function () {
+					gameboardEventHandler(g);
+				});
+			});
+	};
+
+	const gameBoardRemove = () => {
+		Array.from(gameboardElement).forEach((g) => {
+			g.removeEventListener("click", function () {
+				gameboardEventHandler(g);
 			});
 		});
+	};
 
 	const reset = () => {
 		Array.from(gameboardElement).forEach((g) => {
@@ -48,6 +126,9 @@ const gameBoard = (() => {
 		game.reset();
 		winnerDisplay.reset();
 		turnTracker = [];
+		gameboardInput();
+		player1GameStatus = null;
+		player2GameStatus = null;
 	};
 
 	resetGame &&
@@ -60,6 +141,8 @@ const gameBoard = (() => {
 			reset();
 			window.location.href = "../html/playerSelection.html";
 		});
+
+	return { gameboardInput };
 })();
 
 const game = (() => {
@@ -94,8 +177,11 @@ const game = (() => {
 			//Diagonal
 			case _playerPositions[0] == type && _playerPositions[4] == type && _playerPositions[8] == type:
 			case _playerPositions[2] == type && _playerPositions[4] == type && _playerPositions[6] == type:
-				winnerDisplay.results(name);
-				break;
+				winnerDisplay.winnerResults(name);
+				return "game";
+			case !_playerPositions.includes(null):
+				winnerDisplay.tieResults();
+				return "game";
 		}
 	};
 	return { gameOver, updatePositions, reset };
@@ -104,14 +190,18 @@ const game = (() => {
 const winnerDisplay = (() => {
 	const winner = document.getElementById("winner");
 
-	const results = (name) => {
+	const winnerResults = (name) => {
 		winner.textContent = `${name} is the winner`;
+	};
+
+	const tieResults = () => {
+		winner.textContent = "Its a tie!";
 	};
 
 	const reset = () => {
 		winner.textContent = "";
 	};
-	return { results, reset };
+	return { winnerResults, tieResults, reset };
 })();
 
 const playerInfoDisplay = (() => {
@@ -248,6 +338,7 @@ const pageState = (() => {
 if (!player1) {
 	player1 = players(pageState.getStorage("player1").name, pageState.getStorage("player1").type);
 	player2 = players(pageState.getStorage("player2").name, pageState.getStorage("player2").type);
+	gameBoard.gameboardInput();
 	// pageState.deleteStorage("player1");
 	// pageState.deleteStorage("player2");
 }
