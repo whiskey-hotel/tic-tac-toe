@@ -1,4 +1,4 @@
-#playerSelectionContainer{
+#playerSelectionContainer {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -34,17 +34,18 @@
 	height: fit-content;
 
 	border: black 5px solid;
+	padding: 0.25em;
 	margin-right: auto;
 	margin-left: auto;
 	background-color: white;
 }
 
 .form-title {
-	margin: 0 auto;
+	margin: 0.25em auto 1em auto;
 	text-align: center;
 }
 
-.add-player{
+.add-player {
 	display: flex;
 	flex-direction: column;
 }
@@ -66,7 +67,7 @@
 	/* background-color: var(--clr-accent); */
 	color: black;
 	border-radius: 26px;
-	margin: 0 auto;
+	margin: 1em auto;
 	font-size: 1rem;
 	cursor: pointer;
 }
