@@ -128,15 +128,18 @@
 		font-size: 2em;
 	}
 	#winner {
-		font-size: 3em;
+		/*font-size: minmax(3em, 1rem); */	/*******************/
 		height: 3em;
 	}
-
+	#gameboard {
+		width: 28vw;
+		height: 36vh;
+	}
 	.boardSelectionLayout {
 		font-size: 4rem;
 	}
 	.gameButtons {
-		font-size: 1.95em;
+		font-size: 1.55em;
 	}
 	:root {
 		--border-thickness: 8px;
